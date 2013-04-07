@@ -59,6 +59,12 @@ public class MainMenu extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame stg, Graphics g) throws SlickException {
 		MMBackground_Final.draw(0, 0);
+		g.drawString("A: "+ this.IsInYAZ, 600, 100);
+		g.drawString("B: "+ this.IsInPlay, 600, 120);
+		g.drawString("C: "+ this.IsInLoad, 600, 140);
+		g.drawString("D: "+ this.IsInOptions, 600, 160);
+		g.drawString("E: "+ this.IsInCredits, 600, 180);
+		g.drawString("F: "+ this.IsInQuit, 600, 200);
 		if(IsInYAZ)
 			MM_TextOverlay_YAZ.draw(8, 10);
 		else
@@ -103,9 +109,8 @@ public class MainMenu extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame stg, int delta) throws SlickException {
 		Input i = gc.getInput();
-		MouseX = gc.getInput().getMouseX();
-		MouseY = gc.getInput().getMouseY();
-		
+		MouseX = i.getMouseX();
+		MouseY = i.getMouseY();
 		if(i.isKeyPressed(Input.KEY_ENTER)) {
 			stg.enterState(0);
 		}
@@ -150,8 +155,8 @@ public class MainMenu extends BasicGameState {
 			
 			if(IsInYAZ && MM_yaz.playing()){
 				MM_yaz.stop();
-			}else{
-				MM_yaz.play();
+			}else if(!MM_yaz.playing()){
+				MM_yaz.loop();
 			}
 			
 			if(IsInQuit){
