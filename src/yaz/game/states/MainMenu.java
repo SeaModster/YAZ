@@ -11,9 +11,10 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainMenu extends BasicGameState {
 	
-	protected int MAINMENU = 0;
+	protected int MAINMENU = 1;
 	
 	Image MMBackground_Final, MM_Text_YAZ, MM_Text_Play, MM_Text_Options, MM_Text_LoadGame, MM_Text_Credits, MM_Text_Quit, MM_TextOverlay_YAZ, MM_TextOverlay_Play, MM_TextOverlay_Options, MM_TextOverlay_LoadGame, MM_TextOverlay_Credits, MM_TextOverlay_Quit = null;
+	Image MM_Button_Sound, MM_ButtonOverlay_Sound;
 	Sound MM_yaz;
 	
 	@SuppressWarnings("unused")
@@ -25,6 +26,9 @@ public class MainMenu extends BasicGameState {
 	boolean IsInOptions = false;
 	boolean IsInCredits = false;
 	boolean IsInQuit = false;
+	
+	boolean Button_Sound = false;
+	boolean Clicked_Button_Sound = false;
 
 	public MainMenu(int mainmenustate) {
 		this.MAINMENU = mainmenustate;
@@ -50,6 +54,8 @@ public class MainMenu extends BasicGameState {
 		MM_TextOverlay_LoadGame = new Image("res/MM_TextOverlay_LoadGame.png");
 		MM_TextOverlay_Credits = new Image("res/MM_TextOverlay_Credits.png");
 		MM_TextOverlay_Quit = new Image("res/MM_TextOverlay_Quit.png");
+		MM_Button_Sound = new Image("res/MM_Button_Sound.png");
+		MM_ButtonOverlay_Sound = new Image("res/MM_ButtonOverlay_Sound.png");
 		MM_yaz = new Sound("res/MM_yaz.ogg");
 		MM_yaz.play();
 		gc.setTargetFrameRate(60);
@@ -94,12 +100,16 @@ public class MainMenu extends BasicGameState {
 		else
 			MM_Text_Credits.draw(120, 360);
 		
+		
 		if(IsInQuit)
 			MM_TextOverlay_Quit.draw(120, 440);
 		else
 			MM_Text_Quit.draw(120, 440);
-	
-		
+
+		if(Clicked_Button_Sound)
+			MM_ButtonOverlay_Sound.draw(400, 10);
+		else
+			MM_Button_Sound.draw(400, 10);
 	}
 
 	/*
@@ -151,16 +161,28 @@ public class MainMenu extends BasicGameState {
 			IsInQuit = false;
 		}
 		
+		if((MouseX >= 400 && MouseX <= 400 + MM_Button_Sound.getWidth()) && (MouseY >= 10 && MouseY <= 10 + MM_Button_Sound.getHeight())) {
+			Button_Sound = true;
+		}else{
+			Button_Sound = false;
+		}
+		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			
-			if(IsInYAZ && MM_yaz.playing()){
+			if(Button_Sound || IsInYAZ && MM_yaz.playing()){
+				Clicked_Button_Sound = true;
 				MM_yaz.stop();
-			}else if(IsInYAZ && !MM_yaz.playing()){
+			}else if(Button_Sound || IsInYAZ && !MM_yaz.playing()){
+				Clicked_Button_Sound = false;
 				MM_yaz.loop();
 			}
 			
 			if(IsInQuit){
 				gc.exit();
+			}
+			
+			if(IsInCredits){
+				stg.enterState(3);
 			}
 		
 		}
