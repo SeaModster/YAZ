@@ -28,6 +28,7 @@ public class yaz extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
+		gc.setIcons(new String[] {"res/Game_Icon_16.png", "res/Game_Icon_32.png"});		
 		gc.setTargetFrameRate(60);
 		gc.setShowFPS(false);
 		gc.setVSync(true);

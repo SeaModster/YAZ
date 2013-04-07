@@ -155,7 +155,7 @@ public class MainMenu extends BasicGameState {
 			
 			if(IsInYAZ && MM_yaz.playing()){
 				MM_yaz.stop();
-			}else if(!MM_yaz.playing()){
+			}else if(IsInYAZ && !MM_yaz.playing()){
 				MM_yaz.loop();
 			}
 			
