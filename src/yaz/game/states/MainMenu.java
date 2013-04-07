@@ -26,7 +26,6 @@ public class MainMenu extends BasicGameState {
 	boolean IsInOptions = false;
 	boolean IsInCredits = false;
 	boolean IsInQuit = false;
-	
 	boolean Button_Sound = false;
 	boolean Clicked_Button_Sound = false;
 
@@ -100,16 +99,18 @@ public class MainMenu extends BasicGameState {
 		else
 			MM_Text_Credits.draw(120, 360);
 		
-		
 		if(IsInQuit)
 			MM_TextOverlay_Quit.draw(120, 440);
 		else
 			MM_Text_Quit.draw(120, 440);
-
+		
 		if(Clicked_Button_Sound)
 			MM_ButtonOverlay_Sound.draw(400, 10);
 		else
 			MM_Button_Sound.draw(400, 10);
+
+	
+		
 	}
 
 	/*
@@ -166,15 +167,24 @@ public class MainMenu extends BasicGameState {
 		}else{
 			Button_Sound = false;
 		}
+
 		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			
-			if(Button_Sound || IsInYAZ && MM_yaz.playing()){
+			if(Button_Sound || MM_yaz.playing()){
 				Clicked_Button_Sound = true;
 				MM_yaz.stop();
-			}else if(Button_Sound || IsInYAZ && !MM_yaz.playing()){
+			} else if(Button_Sound || !MM_yaz.playing()){
 				Clicked_Button_Sound = false;
 				MM_yaz.loop();
+			}
+			
+			if(Button_Sound || IsInYAZ){
+				Clicked_Button_Sound = MM_yaz.playing();
+			}
+			
+			if(IsInOptions){
+				stg.enterState(4);
 			}
 			
 			if(IsInQuit){
@@ -184,6 +194,7 @@ public class MainMenu extends BasicGameState {
 			if(IsInCredits){
 				stg.enterState(3);
 			}
+
 		
 		}
 	}
