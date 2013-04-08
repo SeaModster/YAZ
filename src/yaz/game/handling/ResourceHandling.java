@@ -29,8 +29,6 @@ import yaz.game.states.OptionsMenu;
 
 public class ResourceHandling extends BasicGameState {
 	
-	yaz y;
-	
 	protected int INIT = 5;
 	public static boolean IsLoaded = false;
 	private DeferredResource nextResource;
@@ -85,7 +83,6 @@ public class ResourceHandling extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
-		y = new yaz();
 		lo_sheet = new SpriteSheet("res/SpriteSheet_Loading_Test.png", 169, 153);
 		loadingAnimation = new Animation(lo_sheet, 500);
 		LO_Background = new Image("res/LO_Background.png");
@@ -158,7 +155,6 @@ public class ResourceHandling extends BasicGameState {
 		if(yaz.DebugMode && IsLoaded){
 			g.drawString("Loading Complete! DEBUG MODE", 600, 500);
 		}
-		//Nothing to render for the resource handler.
 	}
 
 	/**
