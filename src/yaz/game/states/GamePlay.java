@@ -13,6 +13,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import yaz.game.handling.ResourceHandling;
+import yaz.game.main.yaz;
 
 public class GamePlay extends BasicGameState {
 
@@ -23,7 +24,7 @@ public class GamePlay extends BasicGameState {
 
 	protected int GAMEPLAY = 2;
 	
-	private int MouseX, MouseY, Frame; 
+	private int MouseX, MouseY; 
 	private int Current_Choice = 0;
 	
 	private boolean Arrow_Right = false;
@@ -98,21 +99,30 @@ public class GamePlay extends BasicGameState {
 		}
 		if(Clicked_Arrow_Left){
 			ResourceHandling.GAME_Arrow_Left_alt.draw(225, 550);
+			Clicked_Arrow_Left = false;
 		}else{
 			ResourceHandling.GAME_Arrow_Left.draw(225, 550);
 		}
+		
 		if(Clicked_Arrow_Right){
 			ResourceHandling.GAME_Arrow_Right_Alt.draw(1025, 550);
+			Clicked_Arrow_Right = false;
 		}else{
 			ResourceHandling.GAME_Arrow_Right.draw(1025, 550);
 		}
 		
-		ResourceHandling.GAME_Select_Button.draw(475, 550);
+		if(Clicked_Select_Button){
+			ResourceHandling.GAME_Select_Button_Alt.draw(475, 550);
+			Clicked_Select_Button = false;
+		}else{
+			ResourceHandling.GAME_Select_Button.draw(475, 550);
+		}
 		
-		if(IsInBackButton)
+		if(IsInBackButton){
 			ResourceHandling.GAME_BackButton_Alt.draw(10, 650);
-		else
+		}else{
 			ResourceHandling.GAME_BackButton.draw(10, 650);
+		}
 		//Code goes here n' shit
 	}
 
@@ -133,29 +143,18 @@ public class GamePlay extends BasicGameState {
 			stg.enterState(1);
 		}
 		
-		if((MouseX >= 225 && MouseX <= 225 + ResourceHandling.GAME_Arrow_Left.getWidth()) && (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Arrow_Left.getHeight())) {
-			Arrow_Left = true;
-		}else{
-			Arrow_Left = false;
-		}
+		Arrow_Left = ((MouseX >= 225 && MouseX <= 225 + ResourceHandling.GAME_Arrow_Left.getWidth()) 
+				&& (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Arrow_Left.getHeight()));
+			
 		
-		if((MouseX >= 475 && MouseX <= 475 + ResourceHandling.GAME_Select_Button.getWidth()) && (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Select_Button.getHeight())) {
-			Select_Button = true;
-		}else{
-			Select_Button = false;
-		}
+		Select_Button = ((MouseX >= 475 && MouseX <= 475 + ResourceHandling.GAME_Select_Button.getWidth()) 
+				&& (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Select_Button.getHeight()));
 		
-		if((MouseX >= 1025 && MouseX <= 1025 + ResourceHandling.GAME_Arrow_Right.getWidth()) && (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Arrow_Right.getHeight())) {
-			Arrow_Right = true;
-		}else{
-			Arrow_Right = false;
-		}
+		Arrow_Right = ((MouseX >= 1025 && MouseX <= 1025 + ResourceHandling.GAME_Arrow_Right.getWidth()) 
+				&& (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Arrow_Right.getHeight()));
 		
-		if((MouseX >= 10 && MouseX <= 10 + ResourceHandling.GAME_BackButton.getWidth()) && (MouseY >= 650 && MouseY <= 650 + ResourceHandling.GAME_BackButton.getHeight())) {
-			IsInBackButton = true;
-		}else{
-			IsInBackButton = false;
-		}
+		IsInBackButton = ((MouseX >= 10 && MouseX <= 10 + ResourceHandling.GAME_BackButton.getWidth()) && 
+				(MouseY >= 650 && MouseY <= 650 + ResourceHandling.GAME_BackButton.getHeight()));
 		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			
@@ -171,6 +170,9 @@ public class GamePlay extends BasicGameState {
 			
 			if(Select_Button){
 				Clicked_Select_Button = true;
+				if(yaz.Current_Choice == 0){
+					stg.enterState(10, new FadeOutTransition(), new FadeInTransition());
+				}
 			}
 			
 			if(Arrow_Right){

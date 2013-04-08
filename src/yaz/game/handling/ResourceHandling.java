@@ -56,10 +56,14 @@ public class ResourceHandling extends BasicGameState {
 	
 	// GamePlay Resources //
 	public static Image CHARACTER_ZEKE, CHARACTER_NATHAN, CHARACTER_OLGA, CHARACTER_POPS, CHARACTER_JEWEL, CHARACTER_HARRIS = null;
+	public static Image PLAYABLE_CHARACTER_Zeke = null;
 	public static Image GAME_Arrow_Left_alt,  GAME_Arrow_Right_Alt, GAME_Arrow_Left, GAME_Arrow_Right, GAME_Select_Button_Alt, GAME_Select_Button = null;
 	
 	// Overall Game Resources //
 	public static Image GAME_BackButton, GAME_BackButton_Alt = null;
+	
+	// Level Resources //
+	public static Image LEVEL_OBJECT_Backdrop, LEVEL_OBJECT_Floor = null;
 	
 	@SuppressWarnings("unused")
 	private int MouseX, MouseY, Frame; 
@@ -120,6 +124,7 @@ public class ResourceHandling extends BasicGameState {
 		GAME_Zombie_Sound_3 = new Sound("res/MM_ZombieSound_3.ogg");
 		// Gameplay Resource Loading //
 		CHARACTER_ZEKE = new Image("res/CHARACTER_Zeke.png");
+		PLAYABLE_CHARACTER_Zeke = new Image("res/PLAYABLE_CHARACTER_Zeke.png");
 		CHARACTER_NATHAN = new Image("res/CHARACTER_Nathan.png");
 		CHARACTER_OLGA = new Image("res/CHARACTER_Olga.png");
 		CHARACTER_POPS = new Image("res/CHARACTER_Pops.png");
@@ -131,6 +136,9 @@ public class ResourceHandling extends BasicGameState {
 		GAME_Arrow_Right = new Image("res/GAME_Arrow_Right.png");
 		GAME_Select_Button_Alt = new Image("res/GAME_Select_button_Alt.png");
 		GAME_Select_Button = new Image("res/GAME_Select_button.png");
+		// Level Data loading // 
+		LEVEL_OBJECT_Backdrop = new Image("res/LEVEL_OBJECT_Backdrop.png");
+		LEVEL_OBJECT_Floor = new Image("res/LEVEL_OBJECT_Floor.png");
 		
 	}
 
@@ -203,10 +211,5 @@ public class ResourceHandling extends BasicGameState {
 				}
 			}catch (InvalidFileFormatException e) {e.printStackTrace();}catch (IOException e){e.printStackTrace();}
 		}
-		stg.addState(new Opening(yaz.OPENINGSTATE));
-		stg.addState(new MainMenu(yaz.GAMEMENUSTATE));
-		stg.addState(new GamePlay(yaz.GAMEPLAYSTATE));
-		stg.addState(new Credits(yaz.CREDITSSTATE));
-		stg.addState(new OptionsMenu(yaz.OPTIONSMENUSTATE));
 	}
 }
