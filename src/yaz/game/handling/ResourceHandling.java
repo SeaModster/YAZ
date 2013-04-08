@@ -19,11 +19,12 @@ import yaz.game.states.Credits;
 import yaz.game.states.GamePlay;
 import yaz.game.states.MainMenu;
 import yaz.game.states.Opening;
+import yaz.game.states.OptionsMenu;
 
 public class ResourceHandling extends BasicGameState {
 
 	PackedSpriteSheet lo_sheet;
-	protected int INIT = 4;
+	protected int INIT = 5;
 	
 	@SuppressWarnings("unused")
 	private int MouseX, MouseY, Frame; 
@@ -56,6 +57,7 @@ public class ResourceHandling extends BasicGameState {
 		stg.addState(new MainMenu(y.GAMEMENUSTATE));
 		stg.addState(new GamePlay(y.GAMEPLAYSTATE));
 		stg.addState(new Credits(y.CREDITSSTATE));
+		stg.addState(new OptionsMenu(y.OPTIONSMENUSTATE));
 	}
 	
 }
