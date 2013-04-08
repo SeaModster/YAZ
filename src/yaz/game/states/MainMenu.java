@@ -98,7 +98,6 @@ public class MainMenu extends BasicGameState {
 			g.drawString("Is In SOUND_BUTTON: "+Button_Sound, 500, 620);
 			g.drawString("Frames: "+gc.getFPS(), 500, 640);
 			g.drawString("Music Volume: "+gc.getMusicVolume(), 500, 660);
-			
 		}
 		
 	}
@@ -112,47 +111,41 @@ public class MainMenu extends BasicGameState {
 		Input i = gc.getInput();
 		MouseX = i.getMouseX();
 		MouseY = i.getMouseY();
-		if((MouseX >= 8 && MouseX <= 8 + ResourceHandling.MM_Text_YAZ.getWidth()) && (MouseY >= 10 && MouseY <= 10 + ResourceHandling.MM_Text_YAZ.getHeight())) {
-			IsInYAZ = true;
-		}else{
-			IsInYAZ = false;
-		}
 		
-		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Play.getWidth()) && (MouseY >= 120 && MouseY <= 120 + ResourceHandling.MM_Text_Play.getHeight())) {
-			IsInPlay = true;
-		}else{
-			IsInPlay = false;
-		}
+		IsInYAZ = ((MouseX >= 8 && MouseX <= 8 + 
+				ResourceHandling.MM_Text_YAZ.getWidth()) 
+				&& (MouseY >= 10 && MouseY <= 10 + 
+				ResourceHandling.MM_Text_YAZ.getHeight()));
 		
-		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_LoadGame.getWidth()) && (MouseY >= 200 && MouseY <= 200 + ResourceHandling.MM_Text_LoadGame.getHeight())) {
-			IsInLoad = true;
-		}else{
-			IsInLoad = false;
-		}
+		IsInPlay = ((MouseX >= 120 && MouseX <= 120 + 
+				ResourceHandling.MM_Text_Play.getWidth()) 
+				&& (MouseY >= 120 && MouseY <= 120 + 
+				ResourceHandling.MM_Text_Play.getHeight()));
 		
-		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Options.getWidth()) && (MouseY >= 280 && MouseY <= 280 + ResourceHandling.MM_Text_Options.getHeight())) {
-			IsInOptions = true;
-		}else{
-			IsInOptions = false;
-		}
+		IsInLoad = ((MouseX >= 120 && MouseX <= 120 + 
+				ResourceHandling.MM_Text_LoadGame.getWidth()) 
+				&& (MouseY >= 200 && MouseY <= 200 + 
+				ResourceHandling.MM_Text_LoadGame.getHeight()));
 		
-		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Credits.getWidth()) && (MouseY >= 360 && MouseY <= 360 + ResourceHandling.MM_Text_Credits.getHeight())) {
-			IsInCredits = true;
-		}else{
-			IsInCredits = false;
-		}
+		IsInOptions = ((MouseX >= 120 && MouseX <= 120 + 
+				ResourceHandling.MM_Text_Options.getWidth()) 
+				&& (MouseY >= 280 && MouseY <= 280 + 
+				ResourceHandling.MM_Text_Options.getHeight()));
 		
-		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Quit.getWidth()) && (MouseY >= 440 && MouseY <= 440 + ResourceHandling.MM_Text_Quit.getHeight())) {
-			IsInQuit = true;
-		}else{
-			IsInQuit = false;
-		}
+		IsInCredits = ((MouseX >= 120 && MouseX <= 120 + 
+				ResourceHandling.MM_Text_Credits.getWidth()) 
+				&& (MouseY >= 360 && MouseY <= 360 + 
+				ResourceHandling.MM_Text_Credits.getHeight()));
 		
-		if((MouseX >= 400 && MouseX <= 400 + ResourceHandling.MM_Button_Sound.getWidth()) && (MouseY >= 10 && MouseY <= 10 + ResourceHandling.MM_Button_Sound.getHeight())) {
-			Button_Sound = true;
-		}else{
-			Button_Sound = false;
-		}
+		IsInQuit = ((MouseX >= 120 && MouseX <= 120 + 
+				ResourceHandling.MM_Text_Quit.getWidth()) 
+				&& (MouseY >= 440 && MouseY <= 440 + 
+				ResourceHandling.MM_Text_Quit.getHeight()));
+		
+		Button_Sound = ((MouseX >= 400 && MouseX <= 400 + 
+				ResourceHandling.MM_Button_Sound.getWidth()) 
+				&& (MouseY >= 10 && MouseY <= 10 + 
+				ResourceHandling.MM_Button_Sound.getHeight()));
 		
 		if(i.isKeyPressed(Input.KEY_D)){
 			stg.enterState(yaz.DEBUGMENUSTATE);

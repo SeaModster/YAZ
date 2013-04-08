@@ -10,6 +10,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import yaz.game.handling.ResourceHandling;
+import yaz.game.main.yaz;
 
 public class Credits extends BasicGameState {
 	
@@ -42,6 +43,14 @@ public class Credits extends BasicGameState {
 			ResourceHandling.GAME_BackButton_Alt.draw(10, 650);
 		else
 			ResourceHandling.GAME_BackButton.draw(10, 650);
+		
+		if(yaz.DebugMode){
+			g.drawString("Available  processors (cores): "+Runtime.getRuntime().availableProcessors(), 500, 300);
+			g.drawString("Total Memory (bytes): "+Runtime.getRuntime().totalMemory(), 500, 320);
+			g.drawString("Free Memory (bytes): "+Runtime.getRuntime().freeMemory(), 500, 340);
+			g.drawString("Frames: "+gc.getFPS(), 500, 360);
+			g.drawString("Is in back button: " + IsInBackButton, 500, 380);
+		}
 	}
 
 	@Override
@@ -54,12 +63,9 @@ public class Credits extends BasicGameState {
 			stg.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		}
 		
-		if((MouseX >= 10 && MouseX <= 10 + ResourceHandling.GAME_BackButton.getWidth()) && (MouseY >= 650 && MouseY <= 650 + ResourceHandling.GAME_BackButton.getHeight())) {
-			IsInBackButton = true;
-		}else{
-			IsInBackButton = false;
-		}
-		
+		IsInBackButton = ((MouseX >= 10 && MouseX <= 10 + 
+				ResourceHandling.GAME_BackButton.getWidth()) 
+				&& (MouseY >= 650 && MouseY <= 650 + 
+				ResourceHandling.GAME_BackButton.getHeight()));
 	}
-
 }

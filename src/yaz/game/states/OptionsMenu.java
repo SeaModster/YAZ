@@ -17,9 +17,9 @@ public class OptionsMenu extends BasicGameState {
 
 	ResourceHandling reshandle = null;
 	protected int OPTIONSMENU = 0;
-	
+
 	boolean IsInBackButton = false;
-	boolean IsInDebugButton = false;
+	boolean IsInRes = false;
 	
 	Rectangle Res = new Rectangle(48, 250, 275, 20);
 
@@ -49,6 +49,15 @@ public class OptionsMenu extends BasicGameState {
 			ResourceHandling.GAME_BackButton_Alt.draw(10, 650);
 		else
 			ResourceHandling.GAME_BackButton.draw(10, 650);
+		
+		if(yaz.DebugMode){
+			g.drawString("Available  processors (cores): "+Runtime.getRuntime().availableProcessors(), 500, 240);
+			g.drawString("Total Memory (bytes): "+Runtime.getRuntime().totalMemory(), 500, 260);
+			g.drawString("Free Memory (bytes): "+Runtime.getRuntime().freeMemory(), 500, 280);
+			g.drawString("Frames: "+gc.getFPS(), 500, 300);
+			g.drawString("Is in back button: " + IsInBackButton, 500, 320);
+			g.drawString("Is in Res: " + IsInRes,  500, 340);
+		}
 	}
 
 	@Override
@@ -60,17 +69,12 @@ public class OptionsMenu extends BasicGameState {
 			stg.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		}
 		
-		if((MouseX >= 10 && MouseX <= 10 + ResourceHandling.GAME_BackButton.getWidth()) && (MouseY >= 650 && MouseY <= 650 + ResourceHandling.GAME_BackButton.getHeight())) {
-			IsInBackButton = true;
-		}else{
-			IsInBackButton = false;
-		}
+		IsInBackButton = ((MouseX >= 10 && MouseX <= 10 + 
+				ResourceHandling.GAME_BackButton.getWidth()) 
+				&& (MouseY >= 650 && MouseY <= 650 + 
+				ResourceHandling.GAME_BackButton.getHeight()));
 		
-		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-			if(IsInDebugButton){
-				yaz.DebugMode = !yaz.DebugMode;
-			}
-		}
-		
+		IsInRes = ((MouseX >= 48 && MouseX <= 48 + Res.getWidth()) 
+				&& (MouseY >= 250 && MouseY <= 250 + Res.getHeight()));
 	}
 }
