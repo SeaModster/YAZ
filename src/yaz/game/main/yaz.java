@@ -7,6 +7,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import yaz.game.handling.ResourceHandling;
 
+
+/**
+ * The main class where all the magic happens and begins.
+ * 
+ * @author Brad Westley, Tyler Crowe
+ */
 public class yaz extends StateBasedGame {
 
 	public static final int OPENINGSTATE = 0;
@@ -18,13 +24,17 @@ public class yaz extends StateBasedGame {
 	public static int ScreenWidth = 1366;
 	public static int ScreenHeight = 768;
 
+	/**
+	 * Constructor that names the window to "You're a Zombie!".
+	 */
 	public yaz(){
 		super("You're a Zombie!");
 	}
 	
-	/*
-	 * @initStateList
-	 * Called on when the application is created in the main method below it.
+	/**
+	 * Initializes the states that are prepared by the resource handler.
+	 * 
+	 * @param gc the GameContainer
 	 */
 	
 	@Override
@@ -37,6 +47,12 @@ public class yaz extends StateBasedGame {
 		this.enterState(INITRESOURCEMANAGER);
 	}
 
+	/**
+	 * Main method that initializes the display and starts the program.
+	 * 
+	 * @param args unused
+	 * @throws SlickException general slick2d exception
+	 */
 	public static void main(String args[]) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new yaz());
 		app.setDisplayMode(ScreenWidth, ScreenHeight, false);

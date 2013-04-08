@@ -26,31 +26,57 @@ public class ResourceHandling extends BasicGameState {
 		this.INIT = resourceshandling;
 	}
 	
+	/**
+	 * Get method that gives the identifier.
+	 * 
+	 * @return integer identifier
+	 */
 	@Override
 	public int getID() {
 		return this.INIT;
 	}
 
+	/**
+	 * Initializes the resource handler's sprite sheet.
+	 * 
+	 * @param gc the GameContainer
+	 * @param stg represents the game itself
+	 * @throws SlickException general slick2d exception
+	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
 		lo_sheet = new PackedSpriteSheet("res/SpriteSheet_Loading.def");
 		
 	}
 
+	/**
+	 * Renders the resources for the handler (nothing to render!).
+	 * 
+	 * @param gc the GameContainer
+	 * @param stg represents the game itself
+	 * @param g the graphics resources
+	 * @throws SlickException general slick2d exception
+	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame stg, Graphics g) throws SlickException {
-		
+		//Nothing to render for the resource handler.
 	}
 
-	@SuppressWarnings("static-access")
+	/**
+	 * Loads all of the game states.
+	 * 
+	 * @param gc the GameContainer
+	 * @param stg represents the game itself
+	 * @param delta frames
+	 * @throws SlickException general slick2d exception
+	 */
 	@Override
 	public void update(GameContainer gc, StateBasedGame stg, int delta) throws SlickException {
-		yaz y = new yaz();
-		stg.addState(new Opening(y.OPENINGSTATE));
-		stg.addState(new MainMenu(y.GAMEMENUSTATE));
-		stg.addState(new GamePlay(y.GAMEPLAYSTATE));
-		stg.addState(new Credits(y.CREDITSSTATE));
-		stg.addState(new OptionsMenu(y.OPTIONSMENUSTATE));
+		stg.addState(new Opening(yaz.OPENINGSTATE));
+		stg.addState(new MainMenu(yaz.GAMEMENUSTATE));
+		stg.addState(new GamePlay(yaz.GAMEPLAYSTATE));
+		stg.addState(new Credits(yaz.CREDITSSTATE));
+		stg.addState(new OptionsMenu(yaz.OPTIONSMENUSTATE));
 	}
 	
 }
