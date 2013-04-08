@@ -2,20 +2,21 @@ package yaz.game.states;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import yaz.game.handling.ResourceHandling;
+import yaz.game.main.yaz;
 
 public class MainMenu extends BasicGameState {
 	
+	ResourceHandling reshandle = null;
 	protected int MAINMENU = 1;
-	
-	Image MMBackground_Final, MM_Text_YAZ, MM_Text_Play, MM_Text_Options, MM_Text_LoadGame, MM_Text_Credits, MM_Text_Quit, MM_TextOverlay_YAZ, MM_TextOverlay_Play, MM_TextOverlay_Options, MM_TextOverlay_LoadGame, MM_TextOverlay_Credits, MM_TextOverlay_Quit = null;
-	Image MM_Button_Sound, MM_ButtonOverlay_Sound;
-	Sound MM_yaz;
+	yaz y;
 	
 	@SuppressWarnings("unused")
 	private int MouseX, MouseY, Frame; 
@@ -40,76 +41,67 @@ public class MainMenu extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
-		MMBackground_Final = new Image("res/MMBackground_Final.png");
-		MM_Text_YAZ = new Image("res/MM_Text_YAZ.png");
-		MM_Text_Play = new Image("res/MM_Text_Play.png");
-		MM_Text_Options = new Image("res/MM_Text_Options.png");
-		MM_Text_LoadGame = new Image("res/MM_Text_LoadGame.png");
-		MM_Text_Credits = new Image("res/MM_Text_Credits.png");
-		MM_Text_Quit = new Image("res/MM_Text_Quit.png");
-		MM_TextOverlay_YAZ = new Image("res/MM_TextOverlay_YAZ.png");
-		MM_TextOverlay_Play = new Image("res/MM_TextOverlay_Play.png");
-		MM_TextOverlay_Options = new Image("res/MM_TextOverlay_Options.png");
-		MM_TextOverlay_LoadGame = new Image("res/MM_TextOverlay_LoadGame.png");
-		MM_TextOverlay_Credits = new Image("res/MM_TextOverlay_Credits.png");
-		MM_TextOverlay_Quit = new Image("res/MM_TextOverlay_Quit.png");
-		MM_Button_Sound = new Image("res/MM_Button_Sound.png");
-		MM_ButtonOverlay_Sound = new Image("res/MM_ButtonOverlay_Sound.png");
-		MM_yaz = new Sound("res/MM_yaz.ogg");
-		MM_yaz.play();
-		gc.setTargetFrameRate(60);
-		gc.setVSync(true);
+		this.reshandle = new ResourceHandling();
+		y = new yaz();
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame stg, Graphics g) throws SlickException {
-		MMBackground_Final.draw(0, 0);
-		g.drawString("A: "+ this.IsInYAZ, 600, 100);
-		g.drawString("B: "+ this.IsInPlay, 600, 120);
-		g.drawString("C: "+ this.IsInLoad, 600, 140);
-		g.drawString("D: "+ this.IsInOptions, 600, 160);
-		g.drawString("E: "+ this.IsInCredits, 600, 180);
-		g.drawString("F: "+ this.IsInQuit, 600, 200);
+		ResourceHandling.MMBackground_Final.draw(0, 0);
 		if(IsInYAZ)
-			MM_TextOverlay_YAZ.draw(8, 10);
+			ResourceHandling.MM_TextOverlay_YAZ.draw(8, 10);
 		else
-			MM_Text_YAZ.draw(8, 10);
+			ResourceHandling.MM_Text_YAZ.draw(8, 10);
 		
 		
 		if(IsInPlay)
-			MM_TextOverlay_Play.draw(120, 120);
+			ResourceHandling.MM_TextOverlay_Play.draw(120, 120);
 		else
-			MM_Text_Play.draw(120, 120);
+			ResourceHandling.MM_Text_Play.draw(120, 120);
 		
 		
 		if(IsInLoad)
-			MM_TextOverlay_LoadGame.draw(120, 200);
+			ResourceHandling.MM_TextOverlay_LoadGame.draw(120, 200);
 		else
-			MM_Text_LoadGame.draw(120, 200);
+			ResourceHandling.MM_Text_LoadGame.draw(120, 200);
 		
 		
 		if(IsInOptions)
-			MM_TextOverlay_Options.draw(120, 280);
+			ResourceHandling.MM_TextOverlay_Options.draw(120, 280);
 		else
-			MM_Text_Options.draw(120, 280);
+			ResourceHandling.MM_Text_Options.draw(120, 280);
 		
 		
 		if(IsInCredits)
-			MM_TextOverlay_Credits.draw(120, 360);
+			ResourceHandling.MM_TextOverlay_Credits.draw(120, 360);
 		else
-			MM_Text_Credits.draw(120, 360);
+			ResourceHandling.MM_Text_Credits.draw(120, 360);
 		
 		if(IsInQuit)
-			MM_TextOverlay_Quit.draw(120, 440);
+			ResourceHandling.MM_TextOverlay_Quit.draw(120, 440);
 		else
-			MM_Text_Quit.draw(120, 440);
+			ResourceHandling.MM_Text_Quit.draw(120, 440);
 		
 		if(Clicked_Button_Sound)
-			MM_ButtonOverlay_Sound.draw(400, 10);
+			ResourceHandling.MM_ButtonOverlay_Sound.draw(400, 10);
 		else
-			MM_Button_Sound.draw(400, 10);
+			ResourceHandling.MM_Button_Sound.draw(400, 10);
 
-	
+		if(yaz.DebugMode){
+			g.drawString("Available  processors (cores): "+Runtime.getRuntime().availableProcessors(), 500, 440);
+			g.drawString("Total Memory (bytes): "+Runtime.getRuntime().totalMemory(), 500, 460);
+			g.drawString("Free Memory (bytes): "+Runtime.getRuntime().freeMemory(), 500, 480);
+			g.drawString("Is In YAZ_TEXT: "+IsInYAZ, 500, 500);
+			g.drawString("Is In PLAY_TEXT: "+IsInPlay, 500, 520);
+			g.drawString("Is In LOAD_TEXT: "+IsInLoad, 500, 540);
+			g.drawString("Is In OPTION_TEXT: "+IsInOptions, 500, 560);
+			g.drawString("Is In CREDITS_TEXT: "+IsInCredits, 500, 580);
+			g.drawString("Is In QUIT_TEXT: "+IsInQuit, 500, 600);
+			g.drawString("Is In SONND_BUTTON: "+Button_Sound, 500, 620);
+			g.drawString("Frames: "+gc.getFPS(), 500, 640);
+			g.drawString("Music Volume: "+gc.getMusicVolume(), 500, 660);
+			
+		}
 		
 	}
 
@@ -122,47 +114,43 @@ public class MainMenu extends BasicGameState {
 		Input i = gc.getInput();
 		MouseX = i.getMouseX();
 		MouseY = i.getMouseY();
-		if(i.isKeyPressed(Input.KEY_ENTER)) {
-			stg.enterState(0);
-		}
-		
-		if((MouseX >= 8 && MouseX <= 8 + MM_Text_YAZ.getWidth()) && (MouseY >= 10 && MouseY <= 10 + MM_Text_YAZ.getHeight())) {
+		if((MouseX >= 8 && MouseX <= 8 + ResourceHandling.MM_Text_YAZ.getWidth()) && (MouseY >= 10 && MouseY <= 10 + ResourceHandling.MM_Text_YAZ.getHeight())) {
 			IsInYAZ = true;
 		}else{
 			IsInYAZ = false;
 		}
 		
-		if((MouseX >= 120 && MouseX <= 120 + MM_Text_Play.getWidth()) && (MouseY >= 120 && MouseY <= 120 + MM_Text_Play.getHeight())) {
+		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Play.getWidth()) && (MouseY >= 120 && MouseY <= 120 + ResourceHandling.MM_Text_Play.getHeight())) {
 			IsInPlay = true;
 		}else{
 			IsInPlay = false;
 		}
 		
-		if((MouseX >= 120 && MouseX <= 120 + MM_Text_LoadGame.getWidth()) && (MouseY >= 200 && MouseY <= 200 + MM_Text_LoadGame.getHeight())) {
+		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_LoadGame.getWidth()) && (MouseY >= 200 && MouseY <= 200 + ResourceHandling.MM_Text_LoadGame.getHeight())) {
 			IsInLoad = true;
 		}else{
 			IsInLoad = false;
 		}
 		
-		if((MouseX >= 120 && MouseX <= 120 + MM_Text_Options.getWidth()) && (MouseY >= 280 && MouseY <= 280 + MM_Text_Options.getHeight())) {
+		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Options.getWidth()) && (MouseY >= 280 && MouseY <= 280 + ResourceHandling.MM_Text_Options.getHeight())) {
 			IsInOptions = true;
 		}else{
 			IsInOptions = false;
 		}
 		
-		if((MouseX >= 120 && MouseX <= 120 + MM_Text_Credits.getWidth()) && (MouseY >= 360 && MouseY <= 360 + MM_Text_Credits.getHeight())) {
+		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Credits.getWidth()) && (MouseY >= 360 && MouseY <= 360 + ResourceHandling.MM_Text_Credits.getHeight())) {
 			IsInCredits = true;
 		}else{
 			IsInCredits = false;
 		}
 		
-		if((MouseX >= 120 && MouseX <= 120 + MM_Text_Quit.getWidth()) && (MouseY >= 440 && MouseY <= 440 + MM_Text_Quit.getHeight())) {
+		if((MouseX >= 120 && MouseX <= 120 + ResourceHandling.MM_Text_Quit.getWidth()) && (MouseY >= 440 && MouseY <= 440 + ResourceHandling.MM_Text_Quit.getHeight())) {
 			IsInQuit = true;
 		}else{
 			IsInQuit = false;
 		}
 		
-		if((MouseX >= 400 && MouseX <= 400 + MM_Button_Sound.getWidth()) && (MouseY >= 10 && MouseY <= 10 + MM_Button_Sound.getHeight())) {
+		if((MouseX >= 400 && MouseX <= 400 + ResourceHandling.MM_Button_Sound.getWidth()) && (MouseY >= 10 && MouseY <= 10 + ResourceHandling.MM_Button_Sound.getHeight())) {
 			Button_Sound = true;
 		}else{
 			Button_Sound = false;
@@ -171,20 +159,31 @@ public class MainMenu extends BasicGameState {
 		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			
-			if(Button_Sound || MM_yaz.playing()){
+			if(Button_Sound && ResourceHandling.MM_yaz.playing()){
 				Clicked_Button_Sound = true;
-				MM_yaz.stop();
-			} else if(Button_Sound || !MM_yaz.playing()){
+				ResourceHandling.MM_yaz.stop();
+			} else if(Button_Sound && !ResourceHandling.MM_yaz.playing()){
 				Clicked_Button_Sound = false;
-				MM_yaz.loop();
+				ResourceHandling.MM_yaz.loop();
 			}
 			
-			if(Button_Sound || IsInYAZ){
-				Clicked_Button_Sound = MM_yaz.playing();
+			if(IsInYAZ){
+				int Random_Sound_Choice = 1 + (int)(Math.random() * ((3 - 1) + 1));
+				switch(Random_Sound_Choice){
+					case 1:
+						ResourceHandling.GAME_Zombie_Sound_1.play();
+						break;
+					case 2:
+						ResourceHandling.GAME_Zombie_Sound_2.play();
+						break;
+					case 3:
+						ResourceHandling.GAME_Zombie_Sound_3.play();
+						break;
+				}
 			}
 			
 			if(IsInOptions){
-				stg.enterState(4);
+				stg.enterState(4, new FadeOutTransition(), new FadeInTransition());
 			}
 			
 			if(IsInQuit){
@@ -192,9 +191,12 @@ public class MainMenu extends BasicGameState {
 			}
 			
 			if(IsInCredits){
-				stg.enterState(3);
+				stg.enterState(3, new FadeOutTransition(), new FadeInTransition());
 			}
-
+			
+			if(IsInPlay){
+				stg.enterState(2, new FadeOutTransition(), new FadeInTransition());
+			}
 		
 		}
 	}

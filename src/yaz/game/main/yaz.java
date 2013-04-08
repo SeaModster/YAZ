@@ -1,10 +1,13 @@
 package yaz.game.main;
 
+import java.io.IOException;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import yaz.game.handling.INIFactory;
 import yaz.game.handling.ResourceHandling;
 
 
@@ -15,6 +18,8 @@ import yaz.game.handling.ResourceHandling;
  */
 public class yaz extends StateBasedGame {
 
+	INIFactory inif;
+	
 	public static final int OPENINGSTATE = 0;
 	public static final int	GAMEMENUSTATE = 1;
 	public static final int GAMEPLAYSTATE = 2;
@@ -23,10 +28,8 @@ public class yaz extends StateBasedGame {
 	public static final int INITRESOURCEMANAGER = 5;
 	public static int ScreenWidth = 1366;
 	public static int ScreenHeight = 768;
+	public static boolean DebugMode = false;
 
-	/**
-	 * Constructor that names the window to "You're a Zombie!".
-	 */
 	public yaz(){
 		super("You're a Zombie!");
 	}
@@ -39,6 +42,13 @@ public class yaz extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
+		inif = new INIFactory();
+		try {
+			inif.CreateINI("datastorage/YAZ.ini");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.addState(new ResourceHandling(INITRESOURCEMANAGER));
 		gc.setIcons(new String[] {"res/Game_Icon_16.png", "res/Game_Icon_32.png"});		
 		gc.setTargetFrameRate(60);
@@ -47,12 +57,6 @@ public class yaz extends StateBasedGame {
 		this.enterState(INITRESOURCEMANAGER);
 	}
 
-	/**
-	 * Main method that initializes the display and starts the program.
-	 * 
-	 * @param args unused
-	 * @throws SlickException general slick2d exception
-	 */
 	public static void main(String args[]) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new yaz());
 		app.setDisplayMode(ScreenWidth, ScreenHeight, false);

@@ -2,19 +2,25 @@ package yaz.game.states;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class Opening extends BasicGameState {
+import yaz.game.handling.ResourceHandling;
+
+public class Opening extends BasicGameState implements KeyListener {
 	
+	ResourceHandling reshandle = null;
 	protected int GAMEOPENING = 0;
 	
 	@SuppressWarnings("unused")
 	private int MouseX, MouseY, Frame; 
-
+	private boolean anyKeyPressed = false;
+	private boolean anyMouseKeyPressed = false;
+	
 	public Opening(int gameopeningstate) {
 		this.GAMEOPENING = gameopeningstate;
 	}
@@ -26,24 +32,28 @@ public class Opening extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
-		
+		this.reshandle = new ResourceHandling();
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame stg, Graphics g) throws SlickException {
-		Image OP_Background = new Image("res/OP_Background.png");
-		OP_Background.draw(0, 0);
+		ResourceHandling.OP_Background.draw(0, 0);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame stg, int delta) throws SlickException {
-		Input i = gc.getInput();
+		Frame += delta;
 		MouseX = gc.getInput().getMouseX();
 		MouseY = gc.getInput().getMouseY();
 		Frame = delta;
-		if(i.isKeyPressed(Input.KEY_ENTER) || i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			stg.enterState(1);
+		if(anyKeyPressed || anyMouseKeyPressed) {
+			stg.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		}
 	}
-
+	public void keyPressed(int key, char c){
+		this.anyKeyPressed = true;
+	}
+	public void mousePressed(int key, int locx, int locy){
+		this.anyMouseKeyPressed = true;
+	}
 }

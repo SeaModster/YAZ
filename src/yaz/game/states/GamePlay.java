@@ -1,26 +1,43 @@
 package yaz.game.states;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import yaz.game.handling.ResourceHandling;
 
 public class GamePlay extends BasicGameState {
 
+
+	ResourceHandling reshandle = null;
+
 	Image GPBackground = null;	
+
 	protected int GAMEPLAY = 2;
 	
-	@SuppressWarnings("unused")
 	private int MouseX, MouseY, Frame; 
+	private int Current_Choice = 0;
+	
+	private boolean Arrow_Right = false;
+	private boolean Arrow_Left = false;
+	private boolean Select_Button = false;
+	
+	private boolean Clicked_Arrow_Right = false;
+	private boolean Clicked_Arrow_Left = false;
+	private boolean Clicked_Select_Button = false;
+	
+	boolean IsInBackButton = false;
+	
+	Rectangle Filler = new Rectangle(0, 0, 1366, 768);
 
-	/**
-	 * Constructor that initializes the identifier integer (2 by default).
-	 * 
-	 * @param gameplaystate the integer identifier
-	 */
 	public GamePlay(int gameplaystate) {
 		this.GAMEPLAY = gameplaystate;
 	}
@@ -44,8 +61,7 @@ public class GamePlay extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
-		gc.setTargetFrameRate(60);
-		gc.setVSync(true);
+		this.reshandle = new ResourceHandling();
 	}
 
 	/**
@@ -58,6 +74,45 @@ public class GamePlay extends BasicGameState {
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame stg, Graphics g) throws SlickException {
+		g.setColor(Color.lightGray);
+		g.fill(Filler);
+		switch(Current_Choice){
+			case 0: 
+				ResourceHandling.CHARACTER_ZEKE.draw(650, 300);
+				break;
+			case 1: 
+				ResourceHandling.CHARACTER_OLGA.draw(650, 300);
+				break;
+			case 2: 
+				ResourceHandling.CHARACTER_NATHAN.draw(650, 300);
+				break;
+			case 3: 
+				ResourceHandling.CHARACTER_JEWEL.draw(650, 300);
+				break;
+			case 4: 
+				ResourceHandling.CHARACTER_POPS.draw(650, 300);
+				break;
+			case 5: 
+				ResourceHandling.CHARACTER_HARRIS.draw(650, 300);
+				break;
+		}
+		if(Clicked_Arrow_Left){
+			ResourceHandling.GAME_Arrow_Left_alt.draw(225, 550);
+		}else{
+			ResourceHandling.GAME_Arrow_Left.draw(225, 550);
+		}
+		if(Clicked_Arrow_Right){
+			ResourceHandling.GAME_Arrow_Right_Alt.draw(1025, 550);
+		}else{
+			ResourceHandling.GAME_Arrow_Right.draw(1025, 550);
+		}
+		
+		ResourceHandling.GAME_Select_Button.draw(475, 550);
+		
+		if(IsInBackButton)
+			ResourceHandling.GAME_BackButton_Alt.draw(10, 650);
+		else
+			ResourceHandling.GAME_BackButton.draw(10, 650);
 		//Code goes here n' shit
 	}
 
@@ -76,6 +131,61 @@ public class GamePlay extends BasicGameState {
 		MouseY = i.getMouseY();
 		if(i.isKeyPressed(Input.KEY_ENTER)) {
 			stg.enterState(1);
+		}
+		
+		if((MouseX >= 225 && MouseX <= 225 + ResourceHandling.GAME_Arrow_Left.getWidth()) && (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Arrow_Left.getHeight())) {
+			Arrow_Left = true;
+		}else{
+			Arrow_Left = false;
+		}
+		
+		if((MouseX >= 475 && MouseX <= 475 + ResourceHandling.GAME_Select_Button.getWidth()) && (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Select_Button.getHeight())) {
+			Select_Button = true;
+		}else{
+			Select_Button = false;
+		}
+		
+		if((MouseX >= 1025 && MouseX <= 1025 + ResourceHandling.GAME_Arrow_Right.getWidth()) && (MouseY >= 550 && MouseY <= 550 + ResourceHandling.GAME_Arrow_Right.getHeight())) {
+			Arrow_Right = true;
+		}else{
+			Arrow_Right = false;
+		}
+		
+		if((MouseX >= 10 && MouseX <= 10 + ResourceHandling.GAME_BackButton.getWidth()) && (MouseY >= 650 && MouseY <= 650 + ResourceHandling.GAME_BackButton.getHeight())) {
+			IsInBackButton = true;
+		}else{
+			IsInBackButton = false;
+		}
+		
+		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+			
+			if(Arrow_Left){
+				Clicked_Arrow_Left = true;
+				if(Current_Choice <= 5 && Current_Choice > 0){
+					Current_Choice--;
+					Clicked_Arrow_Left = false;
+				}else{
+					Current_Choice = 5;
+				}
+			}
+			
+			if(Select_Button){
+				Clicked_Select_Button = true;
+			}
+			
+			if(Arrow_Right){
+				Clicked_Arrow_Right = true;
+				if(Current_Choice < 5 && Current_Choice >= 0){
+					Current_Choice++;
+					Clicked_Arrow_Right = false;
+				}else{
+					Current_Choice = 0;
+				}
+			}
+			
+			if(IsInBackButton){
+				stg.enterState(1, new FadeOutTransition(), new FadeInTransition());
+			}
 		}
 	}
 
