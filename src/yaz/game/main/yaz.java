@@ -6,11 +6,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import yaz.game.handling.ResourceHandling;
-import yaz.game.states.GamePlay;
-import yaz.game.states.Credits;
-import yaz.game.states.MainMenu;
-import yaz.game.states.Opening;
-import yaz.game.states.OptionsMenu;
 
 public class yaz extends StateBasedGame {
 
