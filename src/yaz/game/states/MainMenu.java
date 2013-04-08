@@ -16,7 +16,6 @@ public class MainMenu extends BasicGameState {
 	
 	ResourceHandling reshandle = null;
 	protected int MAINMENU = 1;
-	yaz y;
 	
 	@SuppressWarnings("unused")
 	private int MouseX, MouseY, Frame; 
@@ -42,7 +41,6 @@ public class MainMenu extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
 		this.reshandle = new ResourceHandling();
-		y = new yaz();
 	}
 
 	@Override
@@ -155,7 +153,6 @@ public class MainMenu extends BasicGameState {
 		}else{
 			Button_Sound = false;
 		}
-
 		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			
