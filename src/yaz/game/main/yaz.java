@@ -26,6 +26,7 @@ public class yaz extends StateBasedGame {
 	public static final int CREDITSSTATE = 3;
 	public static final int OPTIONSMENUSTATE = 4;
 	public static final int INITRESOURCEMANAGER = 5;
+	public static final int DEBUGMENUSTATE = 6;
 	public static int ScreenWidth = 1366;
 	public static int ScreenHeight = 768;
 	public static boolean DebugMode = false;
@@ -46,7 +47,6 @@ public class yaz extends StateBasedGame {
 		try {
 			inif.CreateINI("datastorage/YAZ.ini");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.addState(new ResourceHandling(INITRESOURCEMANAGER));

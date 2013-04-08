@@ -95,7 +95,7 @@ public class MainMenu extends BasicGameState {
 			g.drawString("Is In OPTION_TEXT: "+IsInOptions, 500, 560);
 			g.drawString("Is In CREDITS_TEXT: "+IsInCredits, 500, 580);
 			g.drawString("Is In QUIT_TEXT: "+IsInQuit, 500, 600);
-			g.drawString("Is In SONND_BUTTON: "+Button_Sound, 500, 620);
+			g.drawString("Is In SOUND_BUTTON: "+Button_Sound, 500, 620);
 			g.drawString("Frames: "+gc.getFPS(), 500, 640);
 			g.drawString("Music Volume: "+gc.getMusicVolume(), 500, 660);
 			
@@ -152,6 +152,10 @@ public class MainMenu extends BasicGameState {
 			Button_Sound = true;
 		}else{
 			Button_Sound = false;
+		}
+		
+		if(i.isKeyPressed(Input.KEY_D)){
+			stg.enterState(yaz.DEBUGMENUSTATE);
 		}
 		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){

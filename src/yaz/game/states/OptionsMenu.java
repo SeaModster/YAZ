@@ -22,7 +22,6 @@ public class OptionsMenu extends BasicGameState {
 	boolean IsInDebugButton = false;
 	
 	Rectangle Res = new Rectangle(48, 275, 275, 20);
-	Rectangle Debug = new Rectangle(48, 250, 275, 20);
 
 	private int MouseX, MouseY;
 	
@@ -45,8 +44,6 @@ public class OptionsMenu extends BasicGameState {
 		ResourceHandling.OPT_Background.draw(0, 0);
 		g.drawString("Current Resolution: "+ yaz.ScreenWidth + ", " + yaz.ScreenHeight, 50, 250);
 		g.draw(Res);
-		g.drawString("Dubug Mode: "+yaz.DebugMode, 50, 275);
-		g.draw(Debug);
 		ResourceHandling.GAME_BackButton.draw(10, 650);
 		if(IsInBackButton)
 			ResourceHandling.GAME_BackButton_Alt.draw(10, 650);
@@ -69,22 +66,11 @@ public class OptionsMenu extends BasicGameState {
 			IsInBackButton = false;
 		}
 		
-		if((MouseX >= 48 && MouseX <= 48 + Debug.getWidth()) && (MouseY >= 275 && MouseY <= 275 + Debug.getHeight())) {
-			IsInDebugButton = true;
-		}else{
-			IsInDebugButton = false;
-		}
-		
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			if(IsInDebugButton){
-				if(yaz.DebugMode == true){
-					yaz.DebugMode = false;
-				}else{
-					yaz.DebugMode = true;
-				}
+				yaz.DebugMode = !yaz.DebugMode;
 			}
 		}
 		
 	}
-
 }

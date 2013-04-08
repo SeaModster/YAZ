@@ -22,6 +22,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import yaz.game.main.yaz;
 import yaz.game.states.Credits;
+import yaz.game.states.DebugMenu;
 import yaz.game.states.GamePlay;
 import yaz.game.states.MainMenu;
 import yaz.game.states.Opening;
@@ -134,7 +135,7 @@ public class ResourceHandling extends BasicGameState {
 	}
 
 	/**
-	 * Renders the resources for the handler (nothing to render!).
+	 * Renders the resources for the handler.
 	 * 
 	 * @param gc the GameContainer
 	 * @param stg represents the game itself
@@ -173,6 +174,7 @@ public class ResourceHandling extends BasicGameState {
 		stg.addState(new GamePlay(yaz.GAMEPLAYSTATE));
 		stg.addState(new Credits(yaz.CREDITSSTATE));
 		stg.addState(new OptionsMenu(yaz.OPTIONSMENUSTATE));
+		stg.addState(new DebugMenu(yaz.DEBUGMENUSTATE));
 		if(!IsLoaded){
 			if(nextResource != null){
 				if(nextResource != null){
