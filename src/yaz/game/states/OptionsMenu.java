@@ -21,7 +21,7 @@ public class OptionsMenu extends BasicGameState {
 	boolean IsInBackButton = false;
 	boolean IsInDebugButton = false;
 	
-	Rectangle Res = new Rectangle(48, 275, 275, 20);
+	Rectangle Res = new Rectangle(48, 250, 275, 20);
 
 	private int MouseX, MouseY;
 	
