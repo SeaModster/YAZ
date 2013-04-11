@@ -19,9 +19,11 @@ public class OptionsMenu extends BasicGameState {
 	protected int OPTIONSMENU = 0;
 
 	boolean IsInBackButton = false;
-	boolean IsInRes = false;
+	boolean IsInChangelog = false;
+	
 	
 	Rectangle Res = new Rectangle(48, 250, 275, 20);
+	Rectangle Changelog = new Rectangle(48, 300, 275, 20);
 
 	private int MouseX, MouseY;
 	
@@ -44,6 +46,8 @@ public class OptionsMenu extends BasicGameState {
 		ResourceHandling.OPT_Background.draw(0, 0);
 		g.drawString("Current Resolution: "+ yaz.ScreenWidth + ", " + yaz.ScreenHeight, 50, 250);
 		g.draw(Res);
+		g.drawString("Display Changelog?: "+ yaz.DisplayChangelog, 50, 300);
+		g.draw(Changelog);
 		ResourceHandling.GAME_BackButton.draw(10, 650);
 		if(IsInBackButton)
 			ResourceHandling.GAME_BackButton_Alt.draw(10, 650);
@@ -56,7 +60,6 @@ public class OptionsMenu extends BasicGameState {
 			g.drawString("Free Memory (bytes): "+Runtime.getRuntime().freeMemory(), 500, 280);
 			g.drawString("Frames: "+gc.getFPS(), 500, 300);
 			g.drawString("Is in back button: " + IsInBackButton, 500, 320);
-			g.drawString("Is in Res: " + IsInRes,  500, 340);
 		}
 	}
 
@@ -67,6 +70,7 @@ public class OptionsMenu extends BasicGameState {
 		MouseY = i.getMouseY();
 		if(i.isKeyPressed(Input.KEY_ENTER) || IsInBackButton && i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			stg.enterState(1, new FadeOutTransition(), new FadeInTransition());
+			
 		}
 		
 		IsInBackButton = ((MouseX >= 10 && MouseX <= 10 + 
@@ -74,7 +78,18 @@ public class OptionsMenu extends BasicGameState {
 				&& (MouseY >= 650 && MouseY <= 650 + 
 				ResourceHandling.GAME_BackButton.getHeight()));
 		
-		IsInRes = ((MouseX >= 48 && MouseX <= 48 + Res.getWidth()) 
-				&& (MouseY >= 250 && MouseY <= 250 + Res.getHeight()));
+		IsInChangelog = ((MouseX >= 48 && MouseX <= 48 + Changelog.getWidth()) 
+				&& (MouseY >= 300 && MouseY <= 300 + Changelog.getHeight()));
+		
+		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+			if(IsInChangelog){
+				if(yaz.DisplayChangelog){
+					yaz.DisplayChangelog = false;
+				}else{
+					yaz.DisplayChangelog = true;
+				}
+			}
+		}
+		
 	}
 }

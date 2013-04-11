@@ -16,7 +16,7 @@ public class INIFactory {
 	        ini.put("CORE", "Sound", false);
 	        ini.store();
         }else{
-        	System.out.println("File: 'datastorage/YAZ.ini' already exists.");
+        	System.out.println("File: 'yaz/res/datastorage/YAZ.ini' already exists.");
         }
 	}
 	

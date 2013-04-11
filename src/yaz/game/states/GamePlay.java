@@ -80,21 +80,27 @@ public class GamePlay extends BasicGameState {
 		switch(Current_Choice){
 			case 0: 
 				ResourceHandling.CHARACTER_ZEKE.draw(650, 300);
+				ResourceHandling.BIO_ZEKE.draw(0, 0);
 				break;
 			case 1: 
 				ResourceHandling.CHARACTER_OLGA.draw(650, 300);
+				ResourceHandling.BIO_OLGA.draw(0, 0);
 				break;
 			case 2: 
 				ResourceHandling.CHARACTER_NATHAN.draw(650, 300);
+				ResourceHandling.BIO_NATHAN.draw(0, 0);
 				break;
 			case 3: 
 				ResourceHandling.CHARACTER_JEWEL.draw(650, 300);
+				ResourceHandling.BIO_JEWEL.draw(0, 0);
 				break;
 			case 4: 
 				ResourceHandling.CHARACTER_POPS.draw(650, 300);
+				ResourceHandling.BIO_POPS.draw(0, 0);
 				break;
 			case 5: 
 				ResourceHandling.CHARACTER_HARRIS.draw(650, 300);
+				ResourceHandling.BIO_HARRIS.draw(0, 0);
 				break;
 		}
 		if(Clicked_Arrow_Left){

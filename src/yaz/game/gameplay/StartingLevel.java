@@ -9,9 +9,14 @@ import org.newdawn.slick.state.StateBasedGame;
 import it.randomtower.engine.World;
 
 import yaz.game.handling.ResourceHandling;
+import yaz.game.main.yaz;
 
 public class StartingLevel extends World {
 
+	YAZPlayer ply;
+ 
+	
+	
 	/**
 	 * @param id, unique identifier for World
 	 * @param container, container for World
@@ -27,7 +32,7 @@ public class StartingLevel extends World {
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		super.init(gc, game);
-		YAZPlayer ply = new YAZPlayer(10, 655);
+		ply = new YAZPlayer(getWidth() / 2, 655);
 		add(ply);
 	}
 	
@@ -40,6 +45,9 @@ public class StartingLevel extends World {
 	public void render(GameContainer gc, StateBasedGame stg, Graphics g) throws SlickException {
 		super.render(gc, stg, g);
 		ResourceHandling.LEVEL_OBJECT_Floor.draw(0, 757);
+		if(yaz.GamePaused){
+			ResourceHandling.GAME_GamePaused.draw(0, 0);
+		}
 	}
 	
 }

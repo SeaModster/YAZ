@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-	<!-- basedir -->
-	<basedir path="res" />
-	<!-- images -->
-	<image key="Zeke" file="res/PLAYABLE_CHARACTER_Zeke.png" />
-</resources>

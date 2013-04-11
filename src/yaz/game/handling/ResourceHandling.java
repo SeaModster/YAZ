@@ -42,7 +42,7 @@ public class ResourceHandling extends BasicGameState {
 	// Main Menu Resources //
 	public static Image MMBackground_Final, MM_Text_YAZ, MM_Text_Play, MM_Text_Options, MM_Text_LoadGame, MM_Text_Credits, MM_Text_Quit, 
 		MM_TextOverlay_YAZ, MM_TextOverlay_Play, MM_TextOverlay_Options, MM_TextOverlay_LoadGame, MM_TextOverlay_Credits, MM_TextOverlay_Quit,
-		MM_Button_Sound, MM_ButtonOverlay_Sound = null;
+		MM_Button_Sound, MM_ButtonOverlay_Sound, MM_Changelog = null;
 	public static  Sound MM_yaz, GAME_Zombie_Sound_1, GAME_Zombie_Sound_2, GAME_Zombie_Sound_3;
 	
 	// Opening Resources //
@@ -56,14 +56,17 @@ public class ResourceHandling extends BasicGameState {
 	
 	// GamePlay Resources //
 	public static Image CHARACTER_ZEKE, CHARACTER_NATHAN, CHARACTER_OLGA, CHARACTER_POPS, CHARACTER_JEWEL, CHARACTER_HARRIS = null;
-	public static Image PLAYABLE_CHARACTER_Zeke = null;
-	public static Image GAME_Arrow_Left_alt,  GAME_Arrow_Right_Alt, GAME_Arrow_Left, GAME_Arrow_Right, GAME_Select_Button_Alt, GAME_Select_Button = null;
+	public static Image BIO_ZEKE, BIO_NATHAN, BIO_OLGA, BIO_POPS, BIO_JEWEL, BIO_HARRIS = null;
+	public static Image PLAYABLE_CHARACTER_Zeke_Right, PLAYABLE_CHARACTER_Zeke_Left = null;
+	public static Image GAME_Arrow_Left_alt,  GAME_Arrow_Right_Alt, GAME_Arrow_Left, GAME_Arrow_Right, GAME_Select_Button_Alt, GAME_Select_Button, GAME_GamePaused = null;
 	
 	// Overall Game Resources //
 	public static Image GAME_BackButton, GAME_BackButton_Alt = null;
 	
 	// Level Resources //
 	public static Image LEVEL_OBJECT_Backdrop, LEVEL_OBJECT_Floor = null;
+	
+	public static Image PROP_Crate, PROP_Crate_2, PROP_Crate_3, PROP_Crate_4 = null;
 	
 	@SuppressWarnings("unused")
 	private int MouseX, MouseY, Frame; 
@@ -88,57 +91,71 @@ public class ResourceHandling extends BasicGameState {
 	 */
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
-		lo_sheet = new SpriteSheet("res/SpriteSheet_Loading_Test.png", 169, 153);
+		lo_sheet = new SpriteSheet("yaz/res/SpriteSheet_Loading_Test.png", 169, 153);
 		loadingAnimation = new Animation(lo_sheet, 500);
-		LO_Background = new Image("res/LO_Background.png");
+		LO_Background = new Image("yaz/res/LO_Background.png");
 		// - Begin loading list - //
 		LoadingList.setDeferredLoading(true);
 		// Begin Resource Loading || Opening resource loading //
-		OP_Background = new Image("res/OP_Background.png");
+		OP_Background = new Image("yaz/res/OP_Background.png");
 		// Main Menu Resource Loading //
-		MMBackground_Final = new Image("res/MMBackground_Final.png");
-		MM_Text_YAZ = new Image("res/MM_Text_YAZ.png");
-		MM_Text_Play = new Image("res/MM_Text_Play.png");
-		MM_Text_Options = new Image("res/MM_Text_Options.png");
-		MM_Text_LoadGame = new Image("res/MM_Text_LoadGame.png");
-		MM_Text_Credits = new Image("res/MM_Text_Credits.png");
-		MM_Text_Quit = new Image("res/MM_Text_Quit.png");
-		MM_TextOverlay_YAZ = new Image("res/MM_TextOverlay_YAZ.png");
-		MM_TextOverlay_Play = new Image("res/MM_TextOverlay_Play.png");
-		MM_TextOverlay_Options = new Image("res/MM_TextOverlay_Options.png");
-		MM_TextOverlay_LoadGame = new Image("res/MM_TextOverlay_LoadGame.png");
-		MM_TextOverlay_Credits = new Image("res/MM_TextOverlay_Credits.png");
-		MM_TextOverlay_Quit = new Image("res/MM_TextOverlay_Quit.png");
-		MM_Button_Sound = new Image("res/MM_Button_Sound.png");
-		MM_ButtonOverlay_Sound = new Image("res/MM_ButtonOverlay_Sound.png");
-		MM_yaz = new Sound("res/MM_yaz.ogg");
+		MMBackground_Final = new Image("yaz/res/MMBackground_Final.png");
+		MM_Text_YAZ = new Image("yaz/res/MM_Text_YAZ.png");
+		MM_Text_Play = new Image("yaz/res/MM_Text_Play.png");
+		MM_Text_Options = new Image("yaz/res/MM_Text_Options.png");
+		MM_Text_LoadGame = new Image("yaz/res/MM_Text_LoadGame.png");
+		MM_Text_Credits = new Image("yaz/res/MM_Text_Credits.png");
+		MM_Text_Quit = new Image("yaz/res/MM_Text_Quit.png");
+		MM_TextOverlay_YAZ = new Image("yaz/res/MM_TextOverlay_YAZ.png");
+		MM_TextOverlay_Play = new Image("yaz/res/MM_TextOverlay_Play.png");
+		MM_TextOverlay_Options = new Image("yaz/res/MM_TextOverlay_Options.png");
+		MM_TextOverlay_LoadGame = new Image("yaz/res/MM_TextOverlay_LoadGame.png");
+		MM_TextOverlay_Credits = new Image("yaz/res/MM_TextOverlay_Credits.png");
+		MM_TextOverlay_Quit = new Image("yaz/res/MM_TextOverlay_Quit.png");
+		MM_Button_Sound = new Image("yaz/res/MM_Button_Sound.png");
+		MM_ButtonOverlay_Sound = new Image("yaz/res/MM_ButtonOverlay_Sound.png");
+		MM_yaz = new Sound("yaz/res/MM_yaz.ogg");
+		MM_Changelog = new Image("yaz/res/MM_Changelog.png");
 		// Credits Resource Loading //
-		CRE_Background = new Image("res/CRE_Background.png");
+		CRE_Background = new Image("yaz/res/CRE_Background.png");
 		// Options Menu Resource Loading //
-		OPT_Background = new Image("res/OPT_Background.png");
+		OPT_Background = new Image("yaz/res/OPT_Background.png");
 		// Overall Game Buttons/Image/Fonts/Sounds //
-		GAME_BackButton = new Image("res/GAME_BackButton.png");
-		GAME_BackButton_Alt = new Image("res/GAME_BackButton_Alt.png");
-		GAME_Zombie_Sound_1 = new Sound("res/MM_ZombieSound_1.ogg");
-		GAME_Zombie_Sound_2 = new Sound("res/MM_ZombieSound_2.ogg");
-		GAME_Zombie_Sound_3 = new Sound("res/MM_ZombieSound_3.ogg");
+		GAME_BackButton = new Image("yaz/res/GAME_BackButton.png");
+		GAME_BackButton_Alt = new Image("yaz/res/GAME_BackButton_Alt.png");
+		GAME_Zombie_Sound_1 = new Sound("yaz/res/MM_ZombieSound_1.ogg");
+		GAME_Zombie_Sound_2 = new Sound("yaz/res/MM_ZombieSound_2.ogg");
+		GAME_Zombie_Sound_3 = new Sound("yaz/res/MM_ZombieSound_3.ogg");
 		// Gameplay Resource Loading //
-		CHARACTER_ZEKE = new Image("res/CHARACTER_Zeke.png");
-		PLAYABLE_CHARACTER_Zeke = new Image("res/PLAYABLE_CHARACTER_Zeke.png");
-		CHARACTER_NATHAN = new Image("res/CHARACTER_Nathan.png");
-		CHARACTER_OLGA = new Image("res/CHARACTER_Olga.png");
-		CHARACTER_POPS = new Image("res/CHARACTER_Pops.png");
-		CHARACTER_JEWEL = new Image("res/CHARACTER_Jewel.png");
-		CHARACTER_HARRIS = new Image("res/CHARACTER_Harris.png");
-		GAME_Arrow_Left_alt = new Image("res/GAME_Arrow_Left_alt.png");
-		GAME_Arrow_Right_Alt = new Image("res/GAME_Arrow_Right_Alt.png");
-		GAME_Arrow_Left = new Image("res/GAME_Arrow_Left.png");
-		GAME_Arrow_Right = new Image("res/GAME_Arrow_Right.png");
-		GAME_Select_Button_Alt = new Image("res/GAME_Select_button_Alt.png");
-		GAME_Select_Button = new Image("res/GAME_Select_button.png");
+		CHARACTER_ZEKE = new Image("yaz/res/CHARACTER_Zeke.png");
+		PLAYABLE_CHARACTER_Zeke_Right = new Image("yaz/res/PLAYABLE_CHARACTER_Zeke.png");
+		PLAYABLE_CHARACTER_Zeke_Left = new Image("yaz/res/PLAYABLE_CHARACTER_Zeke_Left.png");
+		CHARACTER_NATHAN = new Image("yaz/res/CHARACTER_Nathan.png");
+		CHARACTER_OLGA = new Image("yaz/res/CHARACTER_Olga.png");
+		CHARACTER_POPS = new Image("yaz/res/CHARACTER_Pops.png");
+		CHARACTER_JEWEL = new Image("yaz/res/CHARACTER_Jewel.png");
+		CHARACTER_HARRIS = new Image("yaz/res/CHARACTER_Harris.png");
+		BIO_ZEKE = new Image("yaz/res/BIO_ZEKE.png");
+		BIO_NATHAN = new Image("yaz/res/BIO_NATHAN.png");
+		BIO_OLGA = new Image("yaz/res/BIO_OLGA.png");
+		BIO_POPS = new Image("yaz/res/BIO_POPS.png");
+		BIO_JEWEL = new Image("yaz/res/BIO_JEWEL.png");
+		BIO_HARRIS = new Image("yaz/res/BIO_HARRIS.png");
+		GAME_Arrow_Left_alt = new Image("yaz/res/GAME_Arrow_Left_alt.png");
+		GAME_Arrow_Right_Alt = new Image("yaz/res/GAME_Arrow_Right_Alt.png");
+		GAME_Arrow_Left = new Image("yaz/res/GAME_Arrow_Left.png");
+		GAME_Arrow_Right = new Image("yaz/res/GAME_Arrow_Right.png");
+		GAME_Select_Button_Alt = new Image("yaz/res/GAME_Select_button_Alt.png");
+		GAME_Select_Button = new Image("yaz/res/GAME_Select_button.png");
+		GAME_GamePaused = new Image("yaz/res/GAME_GamePaused.png");
 		// Level Data loading // 
-		LEVEL_OBJECT_Backdrop = new Image("res/LEVEL_OBJECT_Backdrop.png");
-		LEVEL_OBJECT_Floor = new Image("res/LEVEL_OBJECT_Floor.png");
+		LEVEL_OBJECT_Backdrop = new Image("yaz/res/LEVEL_OBJECT_Backdrop.png");
+		LEVEL_OBJECT_Floor = new Image("yaz/res/LEVEL_OBJECT_Floor.png");
+		// Prop Loading //
+		PROP_Crate = new Image("yaz/res/PROP_Crate.png");
+		PROP_Crate_2 = new Image("yaz/res/PROP_Crate.png");
+		PROP_Crate_3 = new Image("yaz/res/PROP_Crate.png");
+		PROP_Crate_4 = new Image("yaz/res/PROP_Crate.png");
 		
 	}
 
@@ -205,7 +222,7 @@ public class ResourceHandling extends BasicGameState {
 		}else if(Frame/1000 == 3){
 			stg.enterState(0, new FadeOutTransition(), new FadeInTransition());
 			try {
-				Wini ini = new Wini(new File("datastorage/YAZ.ini"));
+				Wini ini = new Wini(new File("yaz/datastorage/YAZ.ini"));
 				if(!ini.get("CORE", "Sound", boolean.class) == false){
 					MM_yaz.loop();
 				}

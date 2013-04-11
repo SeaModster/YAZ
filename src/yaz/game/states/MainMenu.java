@@ -1,9 +1,16 @@
 package yaz.game.states;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.CodeSource;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -28,6 +35,10 @@ public class MainMenu extends BasicGameState {
 	boolean IsInQuit = false;
 	boolean Button_Sound = false;
 	boolean Clicked_Button_Sound = false;
+	
+	// Changelog Shit //
+	Rectangle Changelog1 = new Rectangle(1035, 55, 250, 20);
+	boolean IsInLog1 = false;
 
 	public MainMenu(int mainmenustate) {
 		this.MAINMENU = mainmenustate;
@@ -46,6 +57,13 @@ public class MainMenu extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame stg, Graphics g) throws SlickException {
 		ResourceHandling.MMBackground_Final.draw(0, 0);
+		
+		if(yaz.DisplayChangelog){
+			ResourceHandling.MM_Changelog.draw(1018, 0);
+			g.drawString("Changelog.txt - VERSION 1.0", 1035, 55);
+			g.draw(Changelog1);
+		}
+		
 		if(IsInYAZ)
 			ResourceHandling.MM_TextOverlay_YAZ.draw(8, 10);
 		else
@@ -98,6 +116,8 @@ public class MainMenu extends BasicGameState {
 			g.drawString("Is In SOUND_BUTTON: "+Button_Sound, 500, 620);
 			g.drawString("Frames: "+gc.getFPS(), 500, 640);
 			g.drawString("Music Volume: "+gc.getMusicVolume(), 500, 660);
+			g.drawString("Mouse X: "+MouseX, 500, 680);
+			g.drawString("Mouse Y: "+MouseY, 500, 700);
 		}
 		
 	}
@@ -147,6 +167,9 @@ public class MainMenu extends BasicGameState {
 				&& (MouseY >= 10 && MouseY <= 10 + 
 				ResourceHandling.MM_Button_Sound.getHeight()));
 		
+		IsInLog1 = ((MouseX >= 1035 && MouseX <= 1035 + Changelog1.getWidth()) 
+				&& (MouseY >= 55 && MouseY <= 55 + Changelog1.getHeight()));
+		
 		if(i.isKeyPressed(Input.KEY_D)){
 			stg.enterState(yaz.DEBUGMENUSTATE);
 		}
@@ -190,6 +213,16 @@ public class MainMenu extends BasicGameState {
 			
 			if(IsInPlay){
 				stg.enterState(2, new FadeOutTransition(), new FadeInTransition());
+			}
+			
+			if(IsInLog1 && yaz.DisplayChangelog){
+				try {
+					String command = "cmd /c start notepad "+ new File(new File(".\\yaz\\changelogs\\"), "changelogV1.txt");
+					System.out.println(command);
+					Runtime.getRuntime().exec(command);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		
 		}
