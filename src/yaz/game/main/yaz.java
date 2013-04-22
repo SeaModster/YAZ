@@ -11,7 +11,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import yaz.game.gameplay.StartingLevel;
-import yaz.game.handling.INIFactory;
+import yaz.game.handling.SaveGameFactory;
 import yaz.game.handling.ResourceHandling;
 
 
@@ -25,7 +25,7 @@ public class yaz extends StateBasedGame {
 
 	Rectangle viewPort;
 	
-	INIFactory inif;
+	SaveGameFactory sgf;
 	
 	// Game Info //
 	
@@ -62,12 +62,11 @@ public class yaz extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		inif = new INIFactory();
+		sgf = new SaveGameFactory();
 		addState(new ResourceHandling(INITRESOURCEMANAGER));
 		addState(new StartingLevel(STARTINGLEVELSTATE, gc));
-		try { ResourceManager.loadResources("yaz/res/resources.xml"); } catch (Exception e) { e.printStackTrace(); }
-		try { inif.CreateINI("yaz/datastorage/YAZ.ini"); } catch (IOException e) { e.printStackTrace(); }
-		gc.setIcons(new String[] {"yaz/res/Game_Icon_16.png", "yaz/res/Game_Icon_32.png"});		
+		try { sgf.CreateINI("yaz/datastorage/YAZ.ini"); sgf.SetValue("{LOAD-DATA}", "test", true, "save_1"); } catch (IOException e) { e.printStackTrace(); }
+		gc.setIcons(new String[] {"yaz/res/Game_Icon_16.png", "yaz/res/Game_Icon_32.png"});
 		gc.setTargetFrameRate(60); gc.setShowFPS(false); gc.setVSync(true);
 		enterState(INITRESOURCEMANAGER);
 	}

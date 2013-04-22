@@ -1,0 +1,7 @@
+You're a Zombie - Version 2.0
+
+Fixed:
+	* Spriting errors involving character select screen.
+
+Added:
+	+ New loading state with new sprite.

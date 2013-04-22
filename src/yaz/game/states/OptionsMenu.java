@@ -9,6 +9,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 import yaz.game.handling.ResourceHandling;
 import yaz.game.main.yaz;
@@ -69,7 +70,7 @@ public class OptionsMenu extends BasicGameState {
 		MouseX = i.getMouseX();
 		MouseY = i.getMouseY();
 		if(i.isKeyPressed(Input.KEY_ENTER) || IsInBackButton && i.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			stg.enterState(1, new FadeOutTransition(), new FadeInTransition());
+			stg.enterState(1, null, new VerticalSplitTransition());
 			
 		}
 		

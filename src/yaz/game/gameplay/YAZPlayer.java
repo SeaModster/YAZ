@@ -18,9 +18,7 @@ import yaz.game.main.yaz;
 public class YAZPlayer extends Entity {
 	
 	public static String PLAYER = "player"; 
-	
-	private Image Player_Right, Player_Left;
-	
+		
 	/*
 	 * DO NOT rename this code!
 	 * This is the camera for the game. Any alteration will require tons of renaming.
@@ -36,11 +34,8 @@ public class YAZPlayer extends Entity {
 	
 	public YAZPlayer(float x, float y) {
 		super(x, y);
-		Player_Right = ResourceHandling.PLAYABLE_CHARACTER_Zeke_Right;
-		Player_Left = ResourceHandling.PLAYABLE_CHARACTER_Zeke_Left;
-		setGraphic(Player_Right);
+		setGraphic(ResourceHandling.CHARACTER_ZEKE);
 		addType(PLAYER);
-		setHitBox(x, y, Player_Right.getWidth(), Player_Right.getHeight());
 		define("right", Input.KEY_RIGHT, Input.KEY_D);
 		define("left", Input.KEY_LEFT, Input.KEY_A);
 		viewPort = new Rectangle(0, 0, width, height);
@@ -80,12 +75,6 @@ public class YAZPlayer extends Entity {
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		super.render(gc, g);
 		g.translate(-viewPort.getX(), -viewPort.getY());
-		if(check("right")){
-			setGraphic(Player_Right);
-		}
-		if(check("left")){
-			setGraphic(Player_Left);
-		}
 	}
 	
 }

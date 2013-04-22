@@ -15,6 +15,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 import yaz.game.handling.ResourceHandling;
 import yaz.game.main.yaz;
@@ -37,8 +38,10 @@ public class MainMenu extends BasicGameState {
 	boolean Clicked_Button_Sound = false;
 	
 	// Changelog Shit //
-	Rectangle Changelog1 = new Rectangle(1035, 55, 250, 20);
+	Rectangle Changelog1 = new Rectangle(1035, 85, 250, 20);
+	Rectangle Changelog2 = new Rectangle(1035, 55, 250, 20);
 	boolean IsInLog1 = false;
+	boolean IsInLog2 = false;
 
 	public MainMenu(int mainmenustate) {
 		this.MAINMENU = mainmenustate;
@@ -60,7 +63,9 @@ public class MainMenu extends BasicGameState {
 		
 		if(yaz.DisplayChangelog){
 			ResourceHandling.MM_Changelog.draw(1018, 0);
-			g.drawString("Changelog.txt - VERSION 1.0", 1035, 55);
+			g.drawString("Changelog.txt - VERSION 2.0", 1035, 55);
+			g.draw(Changelog2);			
+			g.drawString("Changelog.txt - VERSION 1.0", 1035, 85);
 			g.draw(Changelog1);
 		}
 		
@@ -168,7 +173,10 @@ public class MainMenu extends BasicGameState {
 				ResourceHandling.MM_Button_Sound.getHeight()));
 		
 		IsInLog1 = ((MouseX >= 1035 && MouseX <= 1035 + Changelog1.getWidth()) 
-				&& (MouseY >= 55 && MouseY <= 55 + Changelog1.getHeight()));
+				&& (MouseY >= 85 && MouseY <= 85 + Changelog1.getHeight()));
+		
+		IsInLog2 = ((MouseX >= 1035 && MouseX <= 1035 + Changelog2.getWidth()) 
+				&& (MouseY >= 55 && MouseY <= 55 + Changelog2.getHeight()));
 		
 		if(i.isKeyPressed(Input.KEY_D)){
 			stg.enterState(yaz.DEBUGMENUSTATE);
@@ -200,7 +208,7 @@ public class MainMenu extends BasicGameState {
 			}
 			
 			if(IsInOptions){
-				stg.enterState(4, new FadeOutTransition(), new FadeInTransition());
+				stg.enterState(4, null, new VerticalSplitTransition());
 			}
 			
 			if(IsInQuit){
@@ -208,16 +216,25 @@ public class MainMenu extends BasicGameState {
 			}
 			
 			if(IsInCredits){
-				stg.enterState(3, new FadeOutTransition(), new FadeInTransition());
+				stg.enterState(3, null, new VerticalSplitTransition());
 			}
 			
 			if(IsInPlay){
-				stg.enterState(2, new FadeOutTransition(), new FadeInTransition());
+				stg.enterState(2, null, new VerticalSplitTransition());
 			}
-			
 			if(IsInLog1 && yaz.DisplayChangelog){
 				try {
 					String command = "cmd /c start notepad "+ new File(new File(".\\yaz\\changelogs\\"), "changelogV1.txt");
+					System.out.println(command);
+					Runtime.getRuntime().exec(command);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(IsInLog2 && yaz.DisplayChangelog){
+				try {
+					String command = "cmd /c start notepad "+ new File(new File(".\\yaz\\changelogs\\"), "changelogV2.txt");
 					System.out.println(command);
 					Runtime.getRuntime().exec(command);
 				} catch (IOException e) {

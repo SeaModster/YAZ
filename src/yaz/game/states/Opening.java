@@ -45,8 +45,7 @@ public class Opening extends BasicGameState implements KeyListener {
 		Frame += delta;
 		MouseX = gc.getInput().getMouseX();
 		MouseY = gc.getInput().getMouseY();
-		Frame = delta;
-		if(anyKeyPressed || anyMouseKeyPressed) {
+		if(Frame/1000 == 1 || anyKeyPressed || anyMouseKeyPressed){
 			stg.enterState(1, new FadeOutTransition(), new FadeInTransition());
 		}
 	}
