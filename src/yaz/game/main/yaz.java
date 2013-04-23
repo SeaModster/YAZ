@@ -4,6 +4,7 @@ import it.randomtower.engine.ResourceManager;
 
 import java.io.IOException;
 
+import org.ini4j.InvalidFileFormatException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -46,8 +47,8 @@ public class yaz extends StateBasedGame {
 	
 	public static boolean DebugMode = false;
 	public static boolean DisplayChangelog = true;
-	public static boolean GamePaused = false;
 	
+	public static boolean GamePaused = false;
 	public static int Current_Choice = 0;
 
 	public yaz(){
@@ -65,17 +66,22 @@ public class yaz extends StateBasedGame {
 		sgf = new SaveGameFactory();
 		addState(new ResourceHandling(INITRESOURCEMANAGER));
 		addState(new StartingLevel(STARTINGLEVELSTATE, gc));
-		try { sgf.CreateINI("yaz/datastorage/YAZ.ini"); sgf.SetValue("{LOAD-DATA}", "test", true, "save_1"); } catch (IOException e) { e.printStackTrace(); }
+		try { sgf.CreateINI("YAZ"); sgf.CreateSaveFile(); sgf.LoadLastCreatedSaveFile(); sgf.IncrementBuildNumber();} catch (IOException e) { e.printStackTrace(); }
 		gc.setIcons(new String[] {"yaz/res/Game_Icon_16.png", "yaz/res/Game_Icon_32.png"});
 		gc.setTargetFrameRate(60); gc.setShowFPS(false); gc.setVSync(true);
 		enterState(INITRESOURCEMANAGER);
 	}
 
 	public static void main(String args[]) throws SlickException {
-		System.out.println("[GAME INFO] - START");
-		System.out.println("[GAME INFO] - "+ version);
-		System.out.println("[GAME INFO] - "+ authors);
-		System.out.println("[GAME INFO] - END");
+		try {
+			System.out.println("[GAME INFO] - START");
+			System.out.println("[GAME INFO] - BUILD [" + SaveGameFactory.GetBuildNumber() + "]");
+			System.out.println("[GAME INFO] - "+ version);
+			System.out.println("[GAME INFO] - "+ authors);
+			System.out.println("[GAME INFO] - END");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		AppGameContainer app = new AppGameContainer(new yaz());
 		app.setDisplayMode(ScreenWidth, ScreenHeight, false);
 		app.start();

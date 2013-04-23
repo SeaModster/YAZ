@@ -1,5 +1,8 @@
 package yaz.game.states;
 
+import java.io.IOException;
+
+import org.ini4j.InvalidFileFormatException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -12,9 +15,12 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.VerticalSplitTransition;
 
 import yaz.game.handling.ResourceHandling;
+import yaz.game.handling.SaveGameFactory;
 import yaz.game.main.yaz;
 
 public class OptionsMenu extends BasicGameState {
+	
+	SaveGameFactory sgf;
 
 	ResourceHandling reshandle = null;
 	protected int OPTIONSMENU = 0;
@@ -39,6 +45,7 @@ public class OptionsMenu extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame stg) throws SlickException {
+		this.sgf = new SaveGameFactory();
 		this.reshandle = new ResourceHandling();
 	}
 
@@ -85,9 +92,9 @@ public class OptionsMenu extends BasicGameState {
 		if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			if(IsInChangelog){
 				if(yaz.DisplayChangelog){
-					yaz.DisplayChangelog = false;
+			        yaz.DisplayChangelog = false;
 				}else{
-					yaz.DisplayChangelog = true;
+			        yaz.DisplayChangelog = true;
 				}
 			}
 		}
