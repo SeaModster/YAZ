@@ -1,10 +1,7 @@
 package yaz.game.main;
 
-import it.randomtower.engine.ResourceManager;
-
 import java.io.IOException;
 
-import org.ini4j.InvalidFileFormatException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
