@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 import org.ini4j.InvalidFileFormatException;
@@ -19,31 +20,15 @@ public class SaveGameFactory {
 	 */
 	
 	File[] ArrayOfSavedFiles;
+	int[] Keys;
 	
 	File LastCreatedSaveFile;
 	
 	public SaveGameFactory() {
 		File SavesFolder = new File(".\\yaz\\datastorage\\saves\\");
 		ArrayOfSavedFiles = SavesFolder.listFiles();
-	}
-	
-	public void SaveLastCreatedSaveFile() throws InvalidFileFormatException, IOException {
-		if(LastCreatedSaveFile != null){
-			getYAZconfg().put("HANDLES", "LastEditedSaveFile", LastCreatedSaveFile.getName());
-			getYAZconfg().store();
-		}else{
-			ConsolePrinter.PrintConsole(3, "Cannot save last saved file.");
-		}
-	}
-
-	public void LoadLastCreatedSaveFile() throws InvalidFileFormatException, IOException {
-		String LoadedString = getYAZconfg().get("HANDLES", "LastEditedSaveFile", String.class);
-		if(LoadedString != null){
-			File f = new File(".\\yaz\\datastorage\\saves\\" + LoadedString + ".ini");
-			LastCreatedSaveFile = f;
-		}else{
-			ConsolePrinter.PrintConsole(3, "Cannot load last saved file.");
-		}
+		Keys = new int[ArrayOfSavedFiles.length];
+		setAllKeys();
 	}
 	
 	public void CreateSaveFile() throws IOException {
@@ -54,8 +39,9 @@ public class SaveGameFactory {
         }
         out.close();
         Wini ini = new Wini(f);
-        ini.put("", "", );
 		if(!ini.isEmpty() && ini != null) {
+			ini.put("CORE", "key", generateKey());
+			ini.store();
 			LastCreatedSaveFile = f;
         	ConsolePrinter.PrintConsole(0, ini.getFile().getName() + " created.");
 		}else{
@@ -63,20 +49,24 @@ public class SaveGameFactory {
 		}
 	}
 	
-	public void CreateSaveFile(String FileName) throws IOException {
-		File f = new File(".\\yaz\\datastorage\\saves\\" + FileName.toLowerCase() + ".ini");
-		BufferedWriter out = new BufferedWriter(new FileWriter(f));
-		for (int i = 0; i < 1; i++) {
-			out.write("{FILE-GENERATOR-MARKER}");
-        }
-        out.close();
-        Wini ini = new Wini(f);
-		if(!ini.isEmpty() && ini != null) {
-			LastCreatedSaveFile = f;
-        	ConsolePrinter.PrintConsole(0, ini.getFile().getName() + " created.");
-		}else{
-			ConsolePrinter.PrintConsole(3, "Error in file creation!");
-		}
+	public void CreateSaveFile(String FileName) {
+		try {
+			File f = new File(".\\yaz\\datastorage\\saves\\" + FileName.toLowerCase() + ".ini");
+			BufferedWriter out = new BufferedWriter(new FileWriter(f));
+			for (int i = 0; i < 1; i++) {
+				out.write("{FILE-GENERATOR-MARKER}");
+	        }
+	        out.close();
+	        Wini ini = new Wini(f);
+			if(!ini.isEmpty() && ini != null) {
+				ini.put("CORE", "key", generateKey());
+				ini.store();
+				LastCreatedSaveFile = f;
+	        	ConsolePrinter.PrintConsole(0, ini.getFile().getName() + " created.");
+			}else{
+				ConsolePrinter.PrintConsole(3, "Error in file creation!");
+			}
+		} catch (IOException e) {}
 	}
 	
 	public void RenameSaveFile(String OldFileName, String NewFileName) throws InvalidFileFormatException, IOException {
@@ -97,8 +87,23 @@ public class SaveGameFactory {
 		return ini;
 	}
 	
-	public File GetLastCreatedFile() throws InvalidFileFormatException, IOException {
-		return LastCreatedSaveFile;
+	public void SaveLastCreatedSaveFile() throws InvalidFileFormatException, IOException {
+		if(LastCreatedSaveFile != null){
+			getYAZconfg().put("HANDLES", "LastEditedSaveFile", LastCreatedSaveFile.getName());
+			getYAZconfg().store();
+		}else{
+			ConsolePrinter.PrintConsole(3, "Cannot save last saved file.");
+		}
+	}
+
+	public void LoadLastCreatedSaveFile() throws InvalidFileFormatException, IOException {
+		String LoadedString = getYAZconfg().get("HANDLES", "LastEditedSaveFile", String.class);
+		if(LoadedString != null){
+			File f = new File(".\\yaz\\datastorage\\saves\\" + LoadedString + ".ini");
+			LastCreatedSaveFile = f;
+		}else{
+			ConsolePrinter.PrintConsole(3, "Cannot load last saved file.");
+		}
 	}
 	
 	public boolean CheckSaveFileExistance(String Filename) {
@@ -124,20 +129,65 @@ public class SaveGameFactory {
 	 * Begin Tree Logic
 	 * 
 	 */
+	public int[] getAllKeys() {
+		return Keys;
+	}
 	
-	private int getKey(Wini file) {
+	private void setAllKeys() {
+		for(int x = 0; x < ArrayOfSavedFiles.length; x++) {
+			try {
+				Wini ini = new Wini(ArrayOfSavedFiles[x]);
+				int Input = getKey(ini);
+				Keys[x] = Input;
+				printoutdata(ArrayOfSavedFiles[x], Input);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	// Debugger Method
+	public void printoutdata(File f, int key) throws InvalidFileFormatException, IOException {
+		System.out.println("FileName: "+ f.getName() + " File's Key: " + getKey(new Wini(f)) + " Key Assigned: " + key);
+	}
+	// Will be removed.
+	
+	public int getKey(Wini file) {
 		return file.get("CORE", "key", int.class);
 	}
 	
-	private String generateKey() {
-		String genedString = "";
-		Random r = new Random();
-		char[] text = new char[5];
-		for(int x = 0; x <= text.length; x++) {
-			text[x] = genedString.charAt(r.nextInt(5));
-		}
-		return new String(text);
+	public int generateKey(){
+		Random ran = new Random();
+		int RandomKey = 0;
+	    for (int i = 0; i < 4; i++) {
+	        RandomKey = ran.nextInt(1000) + 1;
+	    }
+	    if(keyExist(RandomKey)) {
+	    	generateKey();
+	    }
+	    return RandomKey;
 	}
+	
+	private boolean keyExist(int key) {
+		if(Arrays.asList(Keys).contains(key)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void launchTree() {
+		FileTree sf = new FileTree();
+		for (int x = 0; x < Keys.length; x++) {
+			sf.addFile(ArrayOfSavedFiles[x], Keys[x]);
+		}
+	}
+	
+	/*
+	 * 
+	 * End Tree Logic
+	 * 
+	 */
 	
 	public static int buildnumber;
 	

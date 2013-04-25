@@ -58,13 +58,20 @@ public class yaz extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		sgf = new SaveGameFactory();
 		addState(new ResourceHandling(INITRESOURCEMANAGER));
 		addState(new StartingLevel(STARTINGLEVELSTATE, gc));
-		try { sgf.CreateINI("YAZ"); sgf.LoadLastCreatedSaveFile(); sgf.IncrementBuildNumber();} catch (IOException e) { e.printStackTrace(); }
+		enterState(INITRESOURCEMANAGER);
 		gc.setIcons(new String[] {"yaz/res/Game_Icon_16.png", "yaz/res/Game_Icon_32.png"});
 		gc.setTargetFrameRate(60); gc.setShowFPS(false); gc.setVSync(true);
-		enterState(INITRESOURCEMANAGER);
+		sgf = new SaveGameFactory();
+		try { 
+			sgf.CreateINI("YAZ");
+			sgf.LoadLastCreatedSaveFile(); 
+			sgf.IncrementBuildNumber(); 
+			sgf.launchTree();
+		} catch (IOException e) { 
+			e.printStackTrace(); 
+		}
 	}
 
 	public static void main(String args[]) throws SlickException {
